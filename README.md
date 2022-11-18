@@ -78,7 +78,7 @@ The project was realized at the Institute of Automation and Computer Science, Br
 
 
 <p align="center">
-  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RS_Simulation_Workspace.png" width="800" height="450">
+  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RS_Simulation_Workspace.png" width="750" height="450">
 </p>
 
 ## Result:
