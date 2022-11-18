@@ -29,15 +29,15 @@ Linux:
 # The number of rings to solve the Hanoi Tower problem.
 n = 3
 
-Result:
-  [INFO] Solution of the mathematical problem Tower of Hanoi for 3 rings.
-  [INFO] Number of moves: 7
-  [INFO] Standard (T_ROB_R): From Tower 1 to Tower 3.
-  VAR num TOH_SOL(7, 6);
-  OUTPUT := [[2, 0, 2, 3, 0, 0], [1, 0, 1, 2, 0, 1], [2, 2, 1, 1, 1, 1], [0, 0, 2, 1, 2, 0], [2, 1, 0, 0, 2, 1], [1, 1, 2, 1, 1, 1], [2, 0, 2, 1, 0, 2]]
-  [INFO] Inverse (T_ROB_L): From Tower 3 to Tower 1.
-  VAR num TOH_SOL(7, 6);
-  OUTPUT := [[2, 2, 0, 0, 0, 3], [1, 2, 1, 1, 0, 2], [2, 0, 1, 1, 1, 1], [0, 2, 0, 0, 2, 1], [2, 1, 2, 1, 2, 0], [1, 1, 0, 1, 1, 1], [2, 2, 0, 2, 0, 1]]
+# Display the result in the console.
+[INFO] Solution of the mathematical problem Tower of Hanoi for 3 rings.
+[INFO] Number of moves: 7
+[INFO] Standard (T_ROB_R): From Tower 1 to Tower 3.
+VAR num TOH_SOL(7, 6);
+OUTPUT := [[2, 0, 2, 3, 0, 0], [1, 0, 1, 2, 0, 1], [2, 2, 1, 1, 1, 1], [0, 0, 2, 1, 2, 0], [2, 1, 0, 0, 2, 1], [1, 1, 2, 1, 1, 1], [2, 0, 2, 1, 0, 2]]
+[INFO] Inverse (T_ROB_L): From Tower 3 to Tower 1.
+VAR num TOH_SOL(7, 6);
+OUTPUT := [[2, 2, 0, 0, 0, 3], [1, 2, 1, 1, 0, 2], [2, 0, 1, 1, 1, 1], [0, 2, 0, 0, 2, 1], [2, 1, 2, 1, 2, 0], [1, 1, 0, 1, 1, 1], [2, 2, 0, 2, 0, 1]]
 ```
 
 The project was created in collaboration with student Lukas Stanek within the [VRM (Programming for Robots and Manipulators)](https://github.com/rparak/Programming-for-robots-and-manipulators-VRM) university course.
