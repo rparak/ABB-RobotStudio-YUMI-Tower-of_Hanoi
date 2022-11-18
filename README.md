@@ -53,7 +53,7 @@ The project was realized at the Institute of Automation and Computer Science, Br
 6. In the Ready to unpack page, review the information and then click Finish.
 
 <p align="center">
-  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI/blob/main/images/RS_R_ID_1.png" width="800" height="500">
+  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RS_R_ID_1.png" width="800" height="500">
 </p>
 
 ## Project Hierarchy:
