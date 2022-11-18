@@ -19,7 +19,7 @@ Version 6.13.03
 ## Project Description:
 Text ....
 
-**Generate ....:**
+**Generate data to solve the math problem Tower in Hanoi with additional dependencies:**
 ```bash
 Windows:
     $ py -3.6 toh_solver.py
