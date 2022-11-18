@@ -19,6 +19,24 @@ Version 6.13.03
 ## Project Description:
 Text ....
 
+**Generate ....:**
+```bash
+Windows:
+    $ py -3.6 toh_solver.py
+Linux:
+    $ python3 toh_solver.py
+
+Result:
+  [INFO] Solution of the mathematical problem Tower of Hanoi for 3 rings.
+  [INFO] Number of moves: 7
+  [INFO] Standard (T_ROB_R): From Tower 1 to Tower 3.
+  VAR num TOH_SOL(7, 6);
+  OUTPUT := [[2, 0, 2, 3, 0, 0], [1, 0, 1, 2, 0, 1], [2, 2, 1, 1, 1, 1], [0, 0, 2, 1, 2, 0], [2, 1, 0, 0, 2, 1], [1, 1, 2, 1, 1, 1], [2, 0, 2, 1, 0, 2]]
+  [INFO] Inverse (T_ROB_L): From Tower 3 to Tower 1.
+  VAR num TOH_SOL(7, 6);
+  OUTPUT := [[2, 2, 0, 0, 0, 3], [1, 2, 1, 1, 0, 2], [2, 0, 1, 1, 1, 1], [0, 2, 0, 0, 2, 1], [2, 1, 2, 1, 2, 0], [1, 1, 0, 1, 1, 1], [2, 2, 0, 2, 0, 1]]
+```
+
 The project was created in collaboration with student Lukas Stanek within the [VRM (Programming for Robots and Manipulators)](https://github.com/rparak/Programming-for-robots-and-manipulators-VRM) university course.
 
 The project was realized at the Institute of Automation and Computer Science, Brno University of Technology, Faculty of Mechanical Engineering (NETME Centre - Cybernetics and Robotics Division).
@@ -50,6 +68,7 @@ The project was realized at the Institute of Automation and Computer Science, Br
 ```
 
 ## Application:
+
 
 <p align="center">
   <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/1.png" width="800" height="450">
