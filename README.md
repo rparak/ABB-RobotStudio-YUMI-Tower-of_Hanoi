@@ -26,6 +26,9 @@ Windows:
 Linux:
     $ python3 toh_solver.py
 
+# The number of rings to solve the Hanoi Tower problem.
+n = 3
+
 Result:
   [INFO] Solution of the mathematical problem Tower of Hanoi for 3 rings.
   [INFO] Number of moves: 7
