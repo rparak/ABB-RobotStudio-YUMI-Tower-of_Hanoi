@@ -68,8 +68,8 @@ The project was realized at the Institute of Automation and Computer Science, Br
 **Repositary [/ABB-RobotStudio-YUMI-Tower-of_Hanoi/]:**
 
 ```bash
-[ Template (.rspah)                            ] /Template/
-[ Main Program (.rspag)                        ] /Final/
+[ Template (.rspag)                            ] /Template/
+[ Main Program (.rspag)                        ] /Final/Simulation or Real
 [ Example of the resulting application         ] /Exe_file/
 [ Rapid codes (.mod) - Right/Left Arm          ] /Rapid/
 [ CAD files of individual parts of the project ] /Project_Materials/.sat/
