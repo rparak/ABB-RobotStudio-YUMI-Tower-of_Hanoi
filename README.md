@@ -17,7 +17,9 @@ Version 6.13.03
 | ABB RobotStudio       | https://new.abb.com/products/robotics/robotstudio/downloads                           |
 
 ## Project Description:
-Text ....
+The project demonstrates the mathematical problem of the Tower of Hanoi, which is solved by the collaborative robot YuMi (IRB 14000). To solve the problem, we use a Python script to generate the data with additional dependencies and ABB RobotStudio to process the data and generate the trajectory. 
+
+The program uses both arms (T_ROB_L/R) to move the rings (1 to 6) between the three towers using special fingers that were created on a 3D printer.
 
 **Generate data to solve the math problem Tower in Hanoi with additional dependencies:**
 ```bash
