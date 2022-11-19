@@ -69,9 +69,9 @@ The project was realized at the Institute of Automation and Computer Science, Br
 
 ```bash
 [ Template (.rspag)                            ] /Template/
-[ Main Program (.rspag)                        ] /Final/Simulation or Real
+[ Main Program (.rspag) (Simulation)           ] /Final
 [ Example of the resulting application         ] /Exe_file/
-[ Rapid codes (.mod) - Right/Left Arm          ] /Rapid/
+[ Rapid codes (.mod) - Right/Left Arm          ] /Rapid/Simulation and /Real
 [ CAD files of individual parts of the project ] /Project_Materials/.sat/
 [ Python Solver of TOH problem                 ] /Solver/toh_solver.py/
 ```
