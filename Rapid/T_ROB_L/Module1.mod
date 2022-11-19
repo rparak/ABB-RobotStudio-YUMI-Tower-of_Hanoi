@@ -59,6 +59,9 @@ MODULE Module1
     PERS bool IN_POS_ROB_R;
     PERS bool IN_POS_ROB_L;
     
+    ! Variable that indicates switching to the calibration state.
+    PERS bool CONST_CALIBRATION_MODE := FALSE;
+    
     ! Main waypoints (targets) for robot control
     CONST robtarget Target_INIT:=[[63.216469095,163.494541752,161.324792511],[0.506079495,-0.023222858,0.849413008,-0.147789664],[0,0,2,4],[101.964427132,9E+09,9E+09,9E+09,9E+09,9E+09]];
     CONST robtarget Target_GRASP:=[[457.320066834,57.630207513,48.04989228],[-0.000000157,0,0.870355756,-0.492423455],[0,1,1,4],[101.960019593,9E+09,9E+09,9E+09,9E+09,9E+09]];
@@ -85,9 +88,13 @@ MODULE Module1
                 ! Move -> Home position
                 MoveJ Target_INIT,r_str.r_param.speed,fine,Servo\WObj:=wobj0;
                 
-                ! Initialization position near the first grasp ring.
-                MoveL Offs(Target_GRASP, TOH_SOL_Inverse{1, 2} * ((-1) * CONST_TOWER_OFFSET), 100.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
-                r_str.actual_state := 1;
+                IF CONST_CALIBRATION_MODE = TRUE THEN
+                    r_str.actual_state := 100;
+                ELSE
+                    ! Initialization position near the first grasp ring.
+                    MoveL Offs(Target_GRASP, TOH_SOL_Inverse{1, 2} * ((-1) * CONST_TOWER_OFFSET), 100.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                    r_str.actual_state := 1;
+                ENDIF
                 
             CASE 1: 
                 ! Description:                                                                 !
@@ -140,6 +147,13 @@ MODULE Module1
                 ! Initialization position near the first grasp ring.
                 MoveL Offs(Target_GRASP, TOH_SOL_Inverse{1, 2} * ((-1) * CONST_TOWER_OFFSET), 100.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
                 r_str.actual_state := 1;
+                
+            CASE 100:
+                ! Description:                                                               !
+                !  Calibration state for setting up the robot workspace to perform the task. !
+                
+                ! Set an individual number of targets to calibrate the robot workspace.
+                MoveL Offs(Target_GRASP, 0, 100.0, 0.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
         ENDTEST
     ENDPROC
     
