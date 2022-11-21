@@ -40,7 +40,7 @@ MODULE Module1
     VAR robot_ctrl_str r_str;
     
     ! The number of rings to solve the Hanoi Tower problem.
-    PERS num CONST_NUM_OF_RINGS := 3;
+    PERS num CONST_NUM_OF_RINGS := 6;
     ! Tower of Hanoi: Parameters
     PERS num CONST_RING_OFFSET := 20;
     PERS num CONST_TOWER_OFFSET := 91;
@@ -50,8 +50,8 @@ MODULE Module1
     ! Number of rings in the tower.
     !   TOH_SOL{i, 4}: Tower 1; TOH_SOL{i, 5}: Tower 2; TOH_SOL{i, 6}: Tower 3
     !   Note (CONST_NUM_OF_RINGS -> n):
-    !       n(1) := TOH_SOL{1, 6}; n(2) := TOH_SOL{3, 6}; n(3) := TOH_SOL{7, 6}
-    !       n(4) := TOH_SOL{15, 6}; n(5) := TOH_SOL{31, 6}; n(6) := TOH_SOL{63, 6}
+    !       n(1) := TOH_SOL..{1, 6}; n(2) := TOH_SOL..{3, 6}; n(3) := TOH_SOL..{7, 6}
+    !       n(4) := TOH_SOL..{15, 6}; n(5) := TOH_SOL..{31, 6}; n(6) := TOH_SOL..{63, 6}
     PERS num TOH_SOL_Standard{7, 6};
     PERS num TOH_SOL_Inverse{7, 6};
     
