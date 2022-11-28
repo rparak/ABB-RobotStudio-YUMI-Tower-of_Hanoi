@@ -40,10 +40,10 @@ MODULE Module1
     VAR robot_ctrl_str r_str;
     
     ! The number of rings to solve the Hanoi Tower problem.
-    PERS num CONST_NUM_OF_RINGS;
+    PERS num CONST_NUM_OF_RINGS := 6;
     ! Tower of Hanoi: Parameters
-    PERS num CONST_RING_OFFSET;
-    PERS num CONST_TOWER_OFFSET;
+    PERS num CONST_RING_OFFSET := 20;
+    PERS num CONST_TOWER_OFFSET := 91;
     
     ! Movement.
     !   TOH_SOL{i, 1}: Ring; TOH_SOL{i, 2}: Source; TOH_SOL{i, 3}: Destination
@@ -52,19 +52,23 @@ MODULE Module1
     !   Note (CONST_NUM_OF_RINGS -> n):
     !       n(1) := TOH_SOL..{1, 6}; n(2) := TOH_SOL..{3, 6}; n(3) := TOH_SOL..{7, 6}
     !       n(4) := TOH_SOL..{15, 6}; n(5) := TOH_SOL..{31, 6}; n(6) := TOH_SOL..{63, 6}
-    PERS num TOH_SOL_Standard{7, 6};
-    PERS num TOH_SOL_Inverse{7, 6};
+    PERS num TOH_SOL_Standard{63, 6};
+    PERS num TOH_SOL_Inverse{63, 6};
     
     ! Identification of the robot position.
     PERS bool IN_POS_ROB_R;
     PERS bool IN_POS_ROB_L;
     
-    ! Variable that indicates switching to the calibration state.
-    PERS bool CONST_CALIBRATION_MODE;
+    ! Variable that indicates switching to the calibration/home state.
+    PERS bool CONST_CALIBRATION_MODE := FALSE;
+    PERS bool CONST_HOME_MODE := FALSE;
+    
+    ! Constant for the calibration of the smart gripper.
+    VAR bool CONST_CALIBRATION_SG_L := FALSE;
     
     ! Main waypoints (targets) for robot control
-    CONST robtarget Target_INIT:=[[63.216469094,-163.494541756,161.324792507],[0.066010726,-0.842420918,-0.111214912,-0.523068661],[0,0,0,4],[-101.964427132,9E+09,9E+09,9E+09,9E+09,9E+09]];
-    CONST robtarget Target_GRASP:=[[457.32,-57.631690972,48.054366948],[0.5,-0.866025404,0,0],[0,-1,1,4],[-101.964427132,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget Target_INIT:=[[63.216469095,163.494541752,161.324792511],[0.506079495,-0.023222858,0.849413008,-0.147789664],[0,0,2,4],[101.964427132,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget Target_GRASP:=[[457.320066834,57.630207513,48.04989228],[-0.000000157,0,0.870355756,-0.492423455],[0,1,1,4],[101.960019593,9E+09,9E+09,9E+09,9E+09,9E+09]];
 
     ! Description:                             !
     !   Program Main Cycle:                    !
@@ -76,7 +80,21 @@ MODULE Module1
             CASE 0:
                 ! Description:                                                                      !
                 !  Initialization state to reset the environment and move the position to the home. !
-        
+                
+                IF CONST_CALIBRATION_SG_L = FALSE THEN
+                    g_Init \maxSpd:=10 \holdForce:=5 \Calibrate;
+                    g_MoveTo 20;
+                    
+                    CONST_CALIBRATION_SG_L := TRUE;
+                ELSE
+                    g_MoveTo 20;
+                ENDIF
+                
+
+                ! Get the solution of the mathematical problem Tower of Hanoi.
+                GET_TOH_SOLUTION_Standard CONST_NUM_OF_RINGS, TOH_SOL_Standard;
+                GET_TOH_SOLUTION_Inverse CONST_NUM_OF_RINGS, TOH_SOL_Inverse;
+                
                 ! Initialize the parameters
                 INIT_PARAM;
                 ! Restore the environment
@@ -86,17 +104,19 @@ MODULE Module1
                 
                 IF CONST_CALIBRATION_MODE = TRUE THEN
                     r_str.actual_state := 100;
+                ELSEIF CONST_HOME_MODE = TRUE THEN
+                    r_str.actual_state := 110;
                 ELSE
                     ! Initialization position near the first grasp ring.
-                    MoveL Offs(Target_GRASP, TOH_SOL_Standard{1, 2} * ((-1) * CONST_TOWER_OFFSET), -100.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                    MoveL Offs(Target_GRASP, TOH_SOL_Inverse{1, 2} * ((-1) * CONST_TOWER_OFFSET), 100.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
                     r_str.actual_state := 1;
                 ENDIF
                 
-            CASE 1:
+            CASE 1: 
                 ! Description:                                                                 !
                 !  The waiting state for the second robot (arm) to finish solving the problem. !
                 
-                IF IN_POS_ROB_L = TRUE THEN
+                IF IN_POS_ROB_R = TRUE THEN
                     r_str.actual_state := 10;
                 ENDIF 
                 
@@ -106,34 +126,34 @@ MODULE Module1
                 
                 FOR i FROM 1 TO Pow(2, CONST_NUM_OF_RINGS) - 1 DO
                     ! Path: 1-1
-                    MoveL Offs(Target_GRASP, TOH_SOL_Standard{i, 2} * ((-1) * CONST_TOWER_OFFSET), 0.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                    MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 2} * ((-1) * CONST_TOWER_OFFSET), -10.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
                     
                     ! Path: 1-2
-                    MoveL Offs(Target_GRASP, TOH_SOL_Standard{i, 2} * ((-1) * CONST_TOWER_OFFSET), 0.0, 110.0 + CONST_RING_OFFSET * ((TOH_SOL_Standard{i, 4 + TOH_SOL_Standard{i, 2}}) - 1)), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
-                    MoveL Offs(Target_GRASP, TOH_SOL_Standard{i, 2} * ((-1) * CONST_TOWER_OFFSET), 0.0, CONST_RING_OFFSET * ((TOH_SOL_Standard{i, 4 + TOH_SOL_Standard{i, 2}}) - 1)), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
+                    MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 2} * ((-1) * CONST_TOWER_OFFSET), -10.0, 110.0 + CONST_RING_OFFSET * ((TOH_SOL_Inverse{i, 4 + TOH_SOL_Inverse{i, 2}}) - 1)), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                    MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 2} * ((-1) * CONST_TOWER_OFFSET), -10.0, CONST_RING_OFFSET * ((TOH_SOL_Inverse{i, 4 + TOH_SOL_Inverse{i, 2}}) - 1)), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
                     
                     ! Signal -> Attach the object.
-                    ATTACH_RING_ID TOH_SOL_Standard{i, 1} + 1; 
+                    g_GripIn;
                     
                     ! Path: 2-1
-                    MoveL Offs(Target_GRASP, TOH_SOL_Standard{i, 2} * ((-1) * CONST_TOWER_OFFSET), 0.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
-                    MoveL Offs(Target_GRASP, TOH_SOL_Standard{i, 3} * ((-1) * CONST_TOWER_OFFSET), 0.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
-                    MoveL Offs(Target_GRASP, TOH_SOL_Standard{i, 3} * ((-1) * CONST_TOWER_OFFSET), 0.0, 10.0 + CONST_RING_OFFSET * (TOH_SOL_Standard{i, 4 + TOH_SOL_Standard{i, 3}})), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
-                    MoveL Offs(Target_GRASP, TOH_SOL_Standard{i, 3} * ((-1) * CONST_TOWER_OFFSET), 0.0, CONST_RING_OFFSET * (TOH_SOL_Standard{i, 4 + TOH_SOL_Standard{i, 3}})), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
+                    MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 2} * ((-1) * CONST_TOWER_OFFSET), -10.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                    MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 3} * ((-1) * CONST_TOWER_OFFSET), -10.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                    MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 3} * ((-1) * CONST_TOWER_OFFSET), -10.0, 10.0 + CONST_RING_OFFSET * (TOH_SOL_Inverse{i, 4 + TOH_SOL_Inverse{i, 3}})), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                    MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 3} * ((-1) * CONST_TOWER_OFFSET), -10.0, CONST_RING_OFFSET * (TOH_SOL_Inverse{i, 4 + TOH_SOL_Inverse{i, 3}})), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
                     
                     ! Signal -> Detach the object.
-                    DETACH_RING_ID TOH_SOL_Standard{i, 1} + 1;
+                    g_MoveTo 20;
                     
                     ! Path: 2-2
-                    MoveL Offs(Target_GRASP,TOH_SOL_Standard{i, 3} * ((-1) * CONST_TOWER_OFFSET), 0.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                    MoveL Offs(Target_GRASP,TOH_SOL_Inverse{i, 3} * ((-1) * CONST_TOWER_OFFSET), -10.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
                 ENDFOR
                 
                 ! Initialization position near the last storage ring.
-                MoveL Offs(Target_GRASP,TOH_SOL_Standard{Pow(2, CONST_NUM_OF_RINGS) - 1, 3} * ((-1) * CONST_TOWER_OFFSET), -100.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
-        
+                MoveL Offs(Target_GRASP,TOH_SOL_Inverse{Pow(2, CONST_NUM_OF_RINGS) - 1, 3} * ((-1) * CONST_TOWER_OFFSET), 100.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                    
                 ! Change the values (the robot completed the problem).
-                IN_POS_ROB_L := FALSE;
-                IN_POS_ROB_R := TRUE;
+                IN_POS_ROB_R := FALSE;
+                IN_POS_ROB_L := TRUE;
                 r_str.actual_state := 90;
                 
             CASE 90:
@@ -141,7 +161,7 @@ MODULE Module1
                 !  Move to a waiting position. !
                 
                 ! Initialization position near the first grasp ring.
-                MoveL Offs(Target_GRASP, TOH_SOL_Standard{1, 2} * ((-1) * CONST_TOWER_OFFSET),-100.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
+                MoveL Offs(Target_GRASP, TOH_SOL_Inverse{1, 2} * ((-1) * CONST_TOWER_OFFSET), 100.0, 200.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
                 r_str.actual_state := 1;
                 
             CASE 100:
@@ -149,10 +169,16 @@ MODULE Module1
                 !  Calibration state for setting up the robot workspace to perform the task. !
                 
                 ! Set an individual number of targets to calibrate the robot workspace.
-                MoveL Offs(Target_GRASP, 0, -100.0, 0.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
-        ENDTEST     
-    ENDPROC
+                MoveL Offs(Target_GRASP, 0, 100.0, 0.0), r_str.r_param.speed, r_str.r_param.zone, Servo\WObj:=wobj0;
 
+            CASE 110:
+                ! Description:                                           !
+                !  Home state for moving to the initialization position. !
+                
+                MoveAbsJ [[0,-130,30,0,40,0], [135,9E9,9E9,9E9,9E9,9E9]] \NoEOffs, r_str.r_param.speed, fine, tool0;
+        ENDTEST
+    ENDPROC
+    
     PROC INIT_PARAM()
         ! Description:                               !
         !   Intitialization parameters of the robot. !
@@ -169,85 +195,11 @@ MODULE Module1
     PROC RESET_ENV()
         ! Description:                                                   !
         !   Restore the robotic environment to the initialization state. !
-
-        IN_POS_ROB_R := FALSE;
-        IN_POS_ROB_L := TRUE;
-                
-        ! Detach all objects.
-        PulseDO DO_SG_R_DET_ID_1;
-        PulseDO DO_SG_R_DET_ID_2;
-        PulseDO DO_SG_R_DET_ID_3;
-        PulseDO DO_SG_R_DET_ID_4;
-        PulseDO DO_SG_R_DET_ID_5;
-        PulseDO DO_SG_R_DET_ID_6;
         
         ! Smart Gripper -> Release (Home Position)
-        PulseDO DO_SG_R_Home;
+        
     ENDPROC
     
-    PROC ATTACH_RING_ID(num id_ring)
-        ! Description:                                                            !
-        !   Attach (grasp) the ring depending on the input identification number. !
-        
-        WaitTime r_str.r_param.wait_sgT;
-        TEST id_ring
-            CASE 1:
-                PulseDO DO_SG_R_R_ID_1;
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_ATT_ID_1;
-            CASE 2:
-                PulseDO DO_SG_R_R_ID_2;
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_ATT_ID_2;
-            CASE 3:
-                PulseDO DO_SG_R_R_ID_3;
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_ATT_ID_3;
-            CASE 4:
-                PulseDO DO_SG_R_R_ID_4;
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_ATT_ID_4;
-            CASE 5:
-                PulseDO DO_SG_R_R_ID_5;
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_ATT_ID_5;
-            CASE 6:
-                PulseDO DO_SG_R_R_ID_6;
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_ATT_ID_6;
-        ENDTEST
-        WaitTime r_str.r_param.wait_sgT;
-    ENDPROC
-    
-    PROC DETACH_RING_ID(num id_ring)
-        ! Description:                                                              !
-        !   Detach (storage) the ring depending on the input identification number. !
-        
-        WaitTime r_str.r_param.wait_sgT;
-        PulseDO DO_SG_R_Home;
-        TEST id_ring
-            CASE 1:
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_DET_ID_1;
-            CASE 2:
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_DET_ID_2;
-            CASE 3:
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_DET_ID_3;
-            CASE 4:
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_DET_ID_4;
-            CASE 5:
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_DET_ID_5;
-            CASE 6:
-                WaitTime r_str.r_param.wait_sgT;
-                PulseDO DO_SG_R_DET_ID_6;
-        ENDTEST 
-        WaitTime r_str.r_param.wait_sgT;
-    ENDPROC
-        
     PROC Path_Init()
         ! Description:                                  !
         !   Auxiliary targets created in Paths&Targets. !
