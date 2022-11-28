@@ -90,7 +90,6 @@ MODULE Module1
                     g_MoveTo 20;
                 ENDIF
                 
-
                 ! Get the solution of the mathematical problem Tower of Hanoi.
                 GET_TOH_SOLUTION_Standard CONST_NUM_OF_RINGS, TOH_SOL_Standard;
                 GET_TOH_SOLUTION_Inverse CONST_NUM_OF_RINGS, TOH_SOL_Inverse;
