@@ -239,7 +239,7 @@ MODULE Module1
                 ! Description:                                           !
                 !  Home state for moving to the initialization position. !
                 
-                MoveAbsJ [[0,-130,30,0,40,0], [135,9E9,9E9,9E9,9E9,9E9]] \NoEOffs, r_str.r_param.speed, fine, tool0;
+                MoveAbsJ [[0,-130,30,0,40,0], [-135,9E9,9E9,9E9,9E9,9E9]] \NoEOffs, r_str.r_param.speed, fine, tool0;
         ENDTEST     
     ENDPROC
 
