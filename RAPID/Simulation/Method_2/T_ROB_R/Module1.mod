@@ -60,8 +60,8 @@ MODULE Module1
     PERS bool IN_POS_ROB_L;
     
     ! Variable that indicates switching to the calibration/home state.
-    PERS bool CONST_CALIBRATION_MODE := FALSE;
-    PERS bool CONST_HOME_MODE := FALSE;
+    PERS bool CONST_CALIBRATION_MODE;
+    PERS bool CONST_HOME_MODE;
     
     ! Iterator for perform movement with individual arms.
     PERS num i;
