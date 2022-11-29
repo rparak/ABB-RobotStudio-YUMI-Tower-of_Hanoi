@@ -23,13 +23,9 @@ The program uses both arms (T_ROB_L/R) to move the rings (1 to 6) between the th
 
 **The project demonstrates two methods of solving the problem Tower of Hanoi:**
 
-Method 1: 
+Method 1: The standard solution of the problem is performed by one hand and the inverse by the other.
 
-The standard solution of the problem is performed by one hand and the inverse by the other.
-
-Method 2: 
-
-Synchronization of the movement of both arms in the standard and inverse solution of the problem.
+Method 2: Synchronization of the movement of both arms in the standard and inverse solution of the problem.
 
 **Generate data to solve the math problem Tower in Hanoi with additional dependencies:**
 ```bash
