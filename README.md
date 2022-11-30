@@ -82,7 +82,21 @@ The project was realized at the Institute of Automation and Computer Science, Br
 [ Python Solver of TOH problem                 ] /Solver/toh_solver.py/
 ```
 
+## 3D Print - Fingers of the smart gripper:
+
+<p align="center">
+  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RS_Simulation_Workspace.png" width="700" height="450">
+</p>
+
 ## Application:
+
+**ABB RobotStudio Simulation:**
+
+<p align="center">
+  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RS_Simulation_Workspace.png" width="700" height="450">
+</p>
+
+**Real-World Test:**
 
 <p align="center">
   <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RS_Simulation_Workspace.png" width="700" height="450">
