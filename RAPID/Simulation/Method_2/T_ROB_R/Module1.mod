@@ -60,8 +60,8 @@ MODULE Module1
     PERS bool IN_POS_ROB_L;
     
     ! Variable that indicates switching to the calibration/home state.
-    PERS bool CONST_CALIBRATION_MODE := FALSE;
-    PERS bool CONST_HOME_MODE := FALSE;
+    PERS bool CONST_CALIBRATION_MODE;
+    PERS bool CONST_HOME_MODE;
     
     ! Iterator for perform movement with individual arms.
     PERS num i;
@@ -239,7 +239,7 @@ MODULE Module1
                 ! Description:                                           !
                 !  Home state for moving to the initialization position. !
                 
-                MoveAbsJ [[0,-130,30,0,40,0], [135,9E9,9E9,9E9,9E9,9E9]] \NoEOffs, r_str.r_param.speed, fine, tool0;
+                MoveAbsJ [[0,-130,30,0,40,0], [-135,9E9,9E9,9E9,9E9,9E9]] \NoEOffs, r_str.r_param.speed, fine, tool0;
         ENDTEST     
     ENDPROC
 
