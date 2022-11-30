@@ -99,7 +99,9 @@ The project was realized at the Institute of Automation and Computer Science, Br
 **Real-World Test:**
 
 <p align="center">
-  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RS_Simulation_Workspace.png" width="700" height="450">
+  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RW_Yumi_1.png" width="700" height="450">
+  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RW_Yumi_2.png" width="700" height="450">
+  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RW_Yumi_3.png" width="700" height="450">
 </p>
 
 ## Result:
