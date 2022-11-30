@@ -85,7 +85,7 @@ The project was realized at the Institute of Automation and Computer Science, Br
 ## 3D Print - Fingers of the smart gripper:
 
 <p align="center">
-  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/RS_Simulation_Workspace.png" width="700" height="450">
+  <img src="https://github.com/rparak/ABB-RobotStudio-YUMI-Tower-of_Hanoi/blob/main/images/3D_Print_Fingers.png" width="700" height="450">
 </p>
 
 ## Application:
