@@ -110,7 +110,7 @@ The project was realized at the Institute of Automation and Computer Science, Br
 
 ## Result:
 
-Youtube: ....
+Youtube: https://www.youtube.com/watch?v=GDoI5YOv4gQ
 
 ## Contact Info:
 Roman.Parak@outlook.com
