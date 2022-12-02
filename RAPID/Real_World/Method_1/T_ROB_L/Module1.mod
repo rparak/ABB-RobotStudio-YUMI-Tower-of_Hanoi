@@ -133,7 +133,9 @@ MODULE Module1
                     MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 2} * ((-1) * CONST_TOWER_OFFSET), 0.0, CONST_RING_OFFSET * ((TOH_SOL_Inverse{i, 4 + TOH_SOL_Inverse{i, 2}}) - 1)), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
                     
                     ! Signal -> Attach the object.
+                    WaitTime r_str.r_param.wait_sgT;
                     g_GripIn; 
+                    WaitTime r_str.r_param.wait_sgT;
                     
                     ! Movement Description: 
                     !   Move with the ring from the initial state to the new (desired) state.
@@ -143,7 +145,9 @@ MODULE Module1
                     MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 3} * ((-1) * CONST_TOWER_OFFSET), 0.0, CONST_RING_OFFSET * (TOH_SOL_Inverse{i, 4 + TOH_SOL_Inverse{i, 3}})), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
                     
                     ! Signal -> Detach the object.
+                    WaitTime r_str.r_param.wait_sgT;
                     g_MoveTo 20;
+                    WaitTime r_str.r_param.wait_sgT;
                     
                     ! Movement Description: 
                     !   Move near the tower where the ring was stored.
