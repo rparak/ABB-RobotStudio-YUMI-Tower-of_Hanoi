@@ -22,6 +22,7 @@ The project demonstrates the mathematical problem of the Tower of Hanoi, which i
 The program uses both arms (T_ROB_L/R) to move the rings (1 to 6) between the three towers using special fingers that were created on a 3D printer.
 
 Note:
+
 The goal of the game is to transfer the ring from the first tower to the last one. However, you are allowed to move only one ring at a time and never put a big one over a small one. The minimum number of moves required to solve the Tower of Hanoi puzzle is 2^n - 1, where n is the number of rings.
 
 **The project demonstrates two methods of solving the problem Tower of Hanoi:**
