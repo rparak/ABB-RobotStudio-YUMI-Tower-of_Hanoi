@@ -127,7 +127,7 @@ MODULE Module1
                 MoveL Offs(Target_GRASP, TOH_SOL_Standard{i, 2} * ((-1) * CONST_TOWER_OFFSET), 0.0, CONST_RING_OFFSET * ((TOH_SOL_Standard{i, 4 + TOH_SOL_Standard{i, 2}}) - 1)), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
                 
                 ! Signal -> Attach the object.
-                ATTACH_RING_ID TOH_SOL_Standard{i, 1} + 1; 
+                g_GripIn; 
                 
                 ! Movement Description: 
                 !   Move with the ring from the initial state to the new (desired) state.
@@ -137,7 +137,7 @@ MODULE Module1
                 MoveL Offs(Target_GRASP, TOH_SOL_Standard{i, 3} * ((-1) * CONST_TOWER_OFFSET), 0.0, CONST_RING_OFFSET * (TOH_SOL_Standard{i, 4 + TOH_SOL_Standard{i, 3}})), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
                 
                 ! Signal -> Detach the object.
-                DETACH_RING_ID TOH_SOL_Standard{i, 1} + 1;
+                g_MoveTo 20;
                 
                 ! Movement Description: 
                 !   Move near the tower where the ring was stored.
@@ -188,7 +188,7 @@ MODULE Module1
                 MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 2} * ((-1) * CONST_TOWER_OFFSET), 0.0, CONST_RING_OFFSET * ((TOH_SOL_Inverse{i, 4 + TOH_SOL_Inverse{i, 2}}) - 1)), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
                 
                 ! Signal -> Attach the object.
-                ATTACH_RING_ID TOH_SOL_Inverse{i, 1} + 1; 
+                g_GripIn; 
                 
                 ! Movement Description: 
                 !   Move with the ring from the initial state to the new (desired) state.
@@ -198,7 +198,7 @@ MODULE Module1
                 MoveL Offs(Target_GRASP, TOH_SOL_Inverse{i, 3} * ((-1) * CONST_TOWER_OFFSET), 0.0, CONST_RING_OFFSET * (TOH_SOL_Inverse{i, 4 + TOH_SOL_Inverse{i, 3}})), r_str.r_param.speed, fine, Servo\WObj:=wobj0;
                 
                 ! Signal -> Detach the object.
-                DETACH_RING_ID TOH_SOL_Inverse{i, 1} + 1;
+                g_MoveTo 20;
                 
                 ! Movement Description: 
                 !   Move near the tower where the ring was stored.
