@@ -56,7 +56,7 @@ The project was created in collaboration with student Lukas Stanek within the [V
 
 The project was realized at the Institute of Automation and Computer Science, Brno University of Technology, Faculty of Mechanical Engineering (NETME Centre - Cybernetics and Robotics Division).
 
-**Unpacking a station (/Final/Solution_YuMi.rspag):**
+**Unpacking a station (/RSPAG/Method_{1,2}/*.rspag):**
 1. On the File tab, click Open and then browse to the folder and select the Pack&Go file, the Unpack & Work wizard opens.
 2. In the Welcome to the Unpack & Work Wizard page, click Next.
 3. In the Select package page, click Browse and then select the Pack & Go file to unpack and the Target folder. Click Next.
